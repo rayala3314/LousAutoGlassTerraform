@@ -11,5 +11,5 @@ resource "aws_route53_record" "site_domain" {
   name    = var.record_name
   type    = "A"
   ttl     = "300"
-  records = [aws_instance.lous_autoglass.public_ip]
+  records = [aws_instance.lous_autoglass[0].public_ip]
 }
