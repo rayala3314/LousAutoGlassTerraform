@@ -1,5 +1,6 @@
 variable "region" {
-  type = string
+  default = "us-west-1"
+  type    = string
 }
 
 variable "acm_region" {
