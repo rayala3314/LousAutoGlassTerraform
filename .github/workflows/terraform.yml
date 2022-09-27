@@ -21,9 +21,9 @@ jobs:
     - name: Terraform version
       id: version
       run: terraform -v
-    - name: Terraform Format
-      id: fmt
-      run: terraform fmt -check
+    # - name: Terraform Format
+    #   id: fmt
+    #   run: terraform fmt -check
     - name: Terraform Init
       id: init
       run: terraform init
@@ -34,7 +34,7 @@ jobs:
       id: plan
       if: github.event_name == 'pull_request'
       run: terraform plan -no-color -input=false
-      continue-on-error: true
+      continue-on-error: false
     - name: Update Pull Request
       uses: actions/github-script@v6.1.0
       if: github.event_name == 'pull_request'

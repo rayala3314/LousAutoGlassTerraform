@@ -1,6 +1,6 @@
 # Adding http & ssh inbound rule to security group
-resource "aws_security_group" "lous_autoglass" {
-  name          = "lous_autoglass"
+resource "aws_security_group" "lous_autoglass_sg" {
+  name          = "lous_autoglass_sg"
   description   = "security group"
 
   ingress {
@@ -26,12 +26,12 @@ resource "aws_security_group" "lous_autoglass" {
 }
 
 resource "aws_iam_instance_profile" "instance_profile" {
-  name    = "lous_autoglass"
+  name    = "lous_autoglass_iam"
   role    = aws_iam_role.role.name
 }
 
 resource "aws_iam_role" "role" {
-  name                = "lous_autoglass"
+  name                = "lous_autoglass_role"
   path                = "/"
   managed_policy_arns = [aws_iam_policy.allow_secrets_read.arn]
   assume_role_policy  = <<EOF
@@ -52,7 +52,7 @@ EOF
 }
 
 resource "aws_iam_policy" "allow_secrets_read" {
-  name        = "lous_autoglass"
+  name        = "lous_autoglass_secrets"
 
   policy      = jsonencode({
     Version   = "2012-10-17"
@@ -71,8 +71,8 @@ resource "aws_instance" "lous_autoglass" {
   ami                    = "ami-0e4d9ed95865f3b40"
   instance_type          = "t2.micro"
   iam_instance_profile   = aws_iam_instance_profile.instance_profile.name
-  user_data              = filebase64("${path.module}/userdata.tpl")
-  security_groups        = [ "${aws_security_group.lous_autoglass.name}" ]
+  user_data              = filebase64("${path.module}/files/userdata.tpl")
+  security_groups        = [ "${aws_security_group.lous_autoglass_sg.name}" ]
   key_name               = "deploy" 
 
 }
