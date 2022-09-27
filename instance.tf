@@ -71,7 +71,7 @@ resource "aws_instance" "lous_autoglass" {
   ami                    = "ami-0e4d9ed95865f3b40"
   instance_type          = "t2.micro"
   iam_instance_profile   = aws_iam_instance_profile.instance_profile.name
-  user_data              = filebase64("/files/userdata.tpl")
+  user_data              = filebase64("${path.module}/files/userdata.tpl")
   security_groups        = [ "${aws_security_group.lous_autoglass.name}" ]
   key_name               = "deploy" 
 
